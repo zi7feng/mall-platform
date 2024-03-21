@@ -14,13 +14,18 @@ public interface UserConstant {
     //  ------- role --------
 
     /**
-     * default role
+     * buyer role
      */
-    int DEFAULT_ROLE = 0;
+    int BUYER_ROLE = 0;
 
     /**
      * admin role
      */
     int ADMIN_ROLE = 1;
+
+    /**
+     * seller role
+     */
+    int SELLER_ROLE = 2;
 
 }

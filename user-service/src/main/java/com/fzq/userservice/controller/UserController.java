@@ -44,10 +44,11 @@ public class UserController {
         String checkPassword = userRegisterRequest.getCheckPassword();
         String phone = userRegisterRequest.getPhone();
         String email = userRegisterRequest.getEmail();
+        Integer userRole = userRegisterRequest.getUserRole();
         if (StringUtils.isAnyBlank(userAccount, username, userPassword, checkPassword, phone, email)) {
             return null;
         }
-        long result = userService.userRegister(userAccount, username, userPassword, checkPassword, phone, email);
+        long result = userService.userRegister(userAccount, username, userPassword, checkPassword, phone, email, userRole);
         return ResultUtils.success(result);
     }
 

@@ -18,8 +18,7 @@ import org.springframework.util.DigestUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.fzq.userservice.constant.UserConstant.ADMIN_ROLE;
-import static com.fzq.userservice.constant.UserConstant.USER_LOGIN_STATE;
+import static com.fzq.userservice.constant.UserConstant.*;
 
 /**
  * user service
@@ -49,9 +48,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return newUser id
      */
     @Override
-    public long userRegister(String userAccount, String username, String userPassword, String checkPassword, String phone, String email) {
+    public long userRegister(String userAccount, String username, String userPassword, String checkPassword, String phone, String email, Integer userRole) {
         if (StringUtils.isAnyBlank(userAccount, username, userPassword, checkPassword, phone, email)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");
+        }
+        if (userRole != BUYER_ROLE && userRole != SELLER_ROLE) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户角色不正确");
         }
         if (userAccount.length() < 4) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "帐号长度不能小于4");
@@ -87,6 +89,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setUserPassword(encryptPassword);
         user.setPhone(phone);
         user.setEmail(email);
+        user.setUserRole(userRole);
         boolean saveResult = this.save(user);
         if (saveResult) {
             return user.getId();

@@ -92,12 +92,14 @@ public class UserServiceTest {
         String email = "email";
         String phone = "phone";
         String username = "username";
+        Integer userRole = 0;
         User user = new User();
         user.setUserAccount(userAccount);
         user.setUserPassword(userPassword);
         user.setUsername(username);
         user.setEmail(email);
         user.setPhone(phone);
+        user.setUserRole(userRole);
         when(userMapper.selectCount(any())).thenReturn(0L);
         doAnswer(invocation -> {
             User user1 = invocation.getArgument(0);
@@ -106,7 +108,7 @@ public class UserServiceTest {
         }).when(userMapper).insert(any());
 
         // Act
-        long result = userService.userRegister(userAccount, username, userPassword, checkPassword, phone, email);
+        long result = userService.userRegister(userAccount, username, userPassword, checkPassword, phone, email, userRole);
 
         // Assert
         assertEquals(1, result);

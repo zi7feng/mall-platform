@@ -41,4 +41,9 @@ public class UserRegisterRequest implements Serializable {
      */
     private String email;
 
+    /**
+     * user role
+     */
+    private Integer userRole;
+
 }
