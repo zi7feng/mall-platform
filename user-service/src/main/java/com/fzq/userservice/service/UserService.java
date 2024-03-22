@@ -8,52 +8,52 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public interface UserService extends IService<User> {
     /**
-     * 用户注册
-     * @param userAccount 用户账号
-     * @param username 用户名
-     * @param userPassword 用户密码
-     * @param checkPassword 确认密码
-     * @param phone 手机号
-     * @param email 邮箱
-     * @return 新用户id
+     * User registration
+     * @param userAccount User account
+     * @param username User name
+     * @param userPassword User password
+     * @param checkPassword Check password
+     * @param phone Phone number
+     * @param email Email
+     * @return new user id
      */
     long userRegister(String userAccount, String username, String userPassword, String checkPassword, String phone, String email, Integer userRole);
 
     /**
-     * 用户登录
-     * @param userAccount 用户账号
-     * @param userPassword 用户密码
-     * @param request 请求
-     * @return 用户信息
+     * User login
+     * @param userAccount User account
+     * @param userPassword User password
+     * @param request Request
+     * @return desensitized user
      */
     User userLogin(String userAccount, String userPassword, HttpServletRequest request);
 
     /**
-     * 脱敏
-     * @param originUser 原始用户
-     * @return 脱敏用户
+     * Get desensitized user
+     * @param originUser Original user
+     * @return Desensitized user
      */
     User getSafetyUser(User originUser);
 
     /**
-     * 用户登出
-     * @param request 请求
-     * @return 登出结果
+     * User logout
+     * @param request Request
+     * @return Logout result
      */
     int userLogout(HttpServletRequest request);
 
     /**
-     * 获取当前用户
-     * @param request 请求
-     * @return 当前用户
+     * Get current user
+     * @param request Request
+     * @return Current user
      */
     User getCurrentUser(HttpServletRequest request);
 
     /**
-     * 更新用户信息
-     * @param userUpdateRequest 用户更新请求
-     * @param currentUser 当前用户
-     * @return 更新结果
+     * Update user
+     * @param userUpdateRequest User update request
+     * @param currentUser Current user
+     * @return Update result
      */
     int updateUser(UserUpdateRequest userUpdateRequest, User currentUser);
 

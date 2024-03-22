@@ -1,4 +1,4 @@
-package com.fzq.userservice.model.domain;
+package com.fzq.shopservice.model.domain.userservice;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;

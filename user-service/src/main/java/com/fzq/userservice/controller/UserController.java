@@ -36,7 +36,7 @@ public class UserController {
     @PostMapping("/register")
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
         if (userRegisterRequest == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Request body should not be null");
         }
         String userAccount = userRegisterRequest.getUserAccount();
         String username = userRegisterRequest.getUsername();
@@ -46,7 +46,7 @@ public class UserController {
         String email = userRegisterRequest.getEmail();
         Integer userRole = userRegisterRequest.getUserRole();
         if (StringUtils.isAnyBlank(userAccount, username, userPassword, checkPassword, phone, email)) {
-            return null;
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Params should not be null");
         }
         long result = userService.userRegister(userAccount, username, userPassword, checkPassword, phone, email, userRole);
         return ResultUtils.success(result);
@@ -62,7 +62,10 @@ public class UserController {
     @PostMapping("/login")
     public BaseResponse<User> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
         if (userLoginRequest == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求不能为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Request body should not be null");
+        }
+        if (request == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Request should not be null");
         }
 
         String userAccount = userLoginRequest.getUserAccount();
@@ -71,7 +74,7 @@ public class UserController {
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-//        // 尝试从Redis中获取用户信息
+//        // try to get user from Redis
 //        User cachedUser = (User) redisTemplate.opsForValue().get(userAccount);
 //        if (cachedUser != null) {
 //            log.info("user login from redis: {}", cachedUser);
@@ -81,7 +84,7 @@ public class UserController {
 //        }
 //        User user = userService.userLogin(userAccount, userPassword, request);
 //        if (user != null) {
-//            // 将用户信息缓存到Redis中
+//            // put user cache into Redis
 //            redisTemplate.opsForValue().set(userAccount, user, 3600, TimeUnit.SECONDS);
 //        }
 //        return ResultUtils.success(user);
@@ -98,7 +101,7 @@ public class UserController {
     @PostMapping("/logout")
     public BaseResponse<Integer> userLogout(HttpServletRequest request) {
         if (request == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Request should not be null");
         }
         int result = userService.userLogout(request);
         return ResultUtils.success(result);
@@ -110,10 +113,10 @@ public class UserController {
      * @param request request
      * @return BaseResponse
      */
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public BaseResponse<Integer> updateUser(@RequestBody UserUpdateRequest userUpdateRequest, HttpServletRequest request) {
         if (request == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Request should not be null");
         }
         User currentUser = userService.getCurrentUser(request);
         if (currentUser == null) {

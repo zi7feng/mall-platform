@@ -1,4 +1,4 @@
-package com.fzq.userservice.model.entity;
+package com.fzq.shopservice.model.entity;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * log bean
  */
-@Document(collection = "user-logs")
+@Document(collection = "shop-logs")
 @Data
 public class LogBean {
     private String id;

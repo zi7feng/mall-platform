@@ -1,4 +1,4 @@
-package com.fzq.userservice.common;
+package com.fzq.shopservice.common;
 
 
 import jakarta.servlet.http.HttpServletRequest;

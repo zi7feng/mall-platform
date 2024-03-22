@@ -1,9 +1,7 @@
 package com.fzq.shopservice.model.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -48,7 +46,7 @@ public class Shops implements Serializable {
     private BigDecimal shopScore;
 
     /**
-     * shop status, 0-未审批, 1-审批通过, 2-关闭...
+     * shop status, 0 - approved, 1 - pending, 2 - rejected
      */
     private Integer shopStatus;
 
@@ -65,6 +63,7 @@ public class Shops implements Serializable {
     /**
      * is delete?
      */
+    @TableLogic
     private Integer isDelete;
 
     @TableField(exist = false)

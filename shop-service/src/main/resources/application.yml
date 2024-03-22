@@ -15,15 +15,12 @@ spring:
     url: jdbc:mysql://localhost:3306/fmall?serverTimezone=America/New_York
     username: root
     password: 123456
+
   # session timeout (min)
   session:
     timeout: 86400
     store-type: redis
-  redis:
-    port: 6379
-    host: localhost
-  server:
-    port: 8080
+
     servlet:
       context-path: /api
       session:
@@ -34,6 +31,8 @@ spring:
       uri: mongodb://localhost:27017
       database: logs
     redis:
+      port: 6379
+      host: localhost
       database: 0
 mybatis-plus:
   configuration:
@@ -44,3 +43,6 @@ mybatis-plus:
       logic-delete-field: isDelete
       logic-delete-value: 1
       logic-not-delete-value: 0
+
+server:
+  port: 8081

@@ -50,30 +50,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public long userRegister(String userAccount, String username, String userPassword, String checkPassword, String phone, String email, Integer userRole) {
         if (StringUtils.isAnyBlank(userAccount, username, userPassword, checkPassword, phone, email)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Parameter cannot be empty");
         }
         if (userRole != BUYER_ROLE && userRole != SELLER_ROLE) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户角色不正确");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Wrong user role");
         }
         if (userAccount.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "帐号长度不能小于4");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The length of the user account cannot be less than 4");
         }
         if (username.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户名长度不能小于4");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The length of the user name cannot be less than 4");
         }
         if (userPassword.length() < 8 || checkPassword.length() < 8) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码长度不能小于8");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The length of the password cannot be less than 8");
         }
         // no special characters
         String validPattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         Matcher matcher = Pattern.compile(validPattern).matcher(userAccount);
         if (matcher.find()) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "帐号不能包含特殊字符");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The user account cannot contain special characters");
         }
         if (!userPassword.equals(checkPassword)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "两次密码不一致");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The two passwords are not matched");
         }
-        // 用户重复
+        // duplicate account
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
         long count = userMapper.selectCount(queryWrapper);
@@ -109,13 +109,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User userLogin(String userAccount, String userPassword, HttpServletRequest request) {
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Parameter cannot be empty");
         }
         if (userAccount.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户名长度不能小于4");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The length of the user account cannot be less than 4");
         }
         if (userPassword.length() < 8) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码长度不能小于8");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The length of the password cannot be less than 8");
         }
         // no special characters
         String validPattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
